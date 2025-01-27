@@ -1,4 +1,4 @@
-# app
+# frondend_vue
 
 ## Project setup
 ```
