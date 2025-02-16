@@ -14,7 +14,7 @@ module.exports = defineConfig({
     },
   },
 
-  outputDir: '../backend_Symfony/public', // Dossier public de Symfony
-  indexPath: '../backend_Symfony/templates/base.html.twig', // Génère un fichier Twig au lieu de index.html
-  assetsDir: 'assets', // Placer les assets dans un sous-dossier
+  outputDir: '../backend_Symfony/public', // Générer Vue dans le dossier public de Symfony
+  assetsDir: 'assets', // Placer les assets dans public/assets
+  indexPath: 'index.html', // Laisser Vue générer un index.html standard
 });
