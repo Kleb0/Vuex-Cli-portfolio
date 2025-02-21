@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+
+  backend:
+    build: ./backend_Symfony
+    container_name: symfony_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend_Symfony:/var/www/symfony
+    depends_on:
+      - database
+    environment:
+      - APP_ENV=dev
+      - DATABASE_URL=mysql://user:password@database:3306/dbname
+    networks:
+      - app_network
+
+  frontend:
+    build: ./frontend_vue
+    container_name: vue_frontend
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./frontend_vue:/app
+    command: npm run serve
+    networks:
+      - app_network
+
+  database:
+    image: mysql:5.7
+    container_name: symfony_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: dbname
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3307:3306"
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
