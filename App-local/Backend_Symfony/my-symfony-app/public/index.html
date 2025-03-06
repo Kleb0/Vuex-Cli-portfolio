@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js App</title>
+    <base href="/">
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // console.log('Chargement des fichiers Vue.js...');
+            // console.log("Vérification DOM : ", document.getElementById('app'));
+    
+            fetch('/api/vue-files')
+                .then(response => response.json())
+                .then(files => {
+                    // console.log("Fichiers trouvés :", files);
+                    const head = document.head;
+    
+                    // Ajouter les fichiers CSS
+                    files.filter(f => f.endsWith('.css')).forEach(file => {
+                        let cssLink = document.createElement('link');
+                        cssLink.rel = 'stylesheet';
+                        cssLink.href = '/vue_dist/' + file;
+                        head.appendChild(cssLink);
+                    });
+    
+                    // Ajouter les fichiers JS
+                    files.filter(f => f.endsWith('.js')).forEach(file => {
+                        let script = document.createElement('script');
+                        script.type = 'module';
+                        script.crossOrigin = 'anonymous';
+                        script.src = '/vue_dist/' + file;
+                        head.appendChild(script);
+                    });
+    
+                    // console.log("Vue.js devrait être monté maintenant.");
+                })
+                .catch(error => console.error("Erreur lors du chargement des fichiers Vue.js :", error));
+        });
+    </script>
+    
+</head>
+<body>
+    <div id="app"></div>
+</body>
+</html>
